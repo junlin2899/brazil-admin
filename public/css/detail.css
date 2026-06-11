@@ -1,0 +1,423 @@
+/* ============================
+   百川巴西货盘 - 详情页样式
+   ============================ */
+
+/* ---- Breadcrumb ---- */
+.breadcrumb-bar {
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    padding: 14px 0;
+    margin-top: 64px;
+}
+
+.breadcrumb-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+    color: var(--color-primary);
+}
+
+.breadcrumb-sep {
+    color: var(--color-text-light);
+    margin: 0 8px;
+    font-size: 0.875rem;
+}
+
+.breadcrumb-current {
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* ---- Detail Layout ---- */
+.detail-main {
+    padding: 48px 0 80px;
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+/* ---- Detail Image ---- */
+.detail-image-section {
+    position: sticky;
+    top: 88px;
+}
+
+.detail-image {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.detail-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.detail-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ---- Detail Info ---- */
+.detail-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.detail-badge {
+    display: inline-flex;
+    margin-bottom: 12px;
+}
+
+.detail-badge .badge-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-badge .badge-tag.hot {
+    background: #FFF0F0;
+    color: #EE4D2D;
+}
+
+.detail-badge .badge-tag.new {
+    background: #E8F5E9;
+    color: #009C3B;
+}
+
+.detail-platform-tag {
+    margin-bottom: 12px;
+}
+
+.detail-name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.detail-short-desc {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.detail-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.detail-price-wrap {
+    display: flex;
+    align-items: baseline;
+}
+
+.detail-price-symbol {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #EE4D2D;
+}
+
+.detail-price-num {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #EE4D2D;
+    line-height: 1;
+}
+
+.detail-price-unit {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-left: 2px;
+}
+
+.detail-moq {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
+    background: var(--color-bg);
+    padding: 4px 12px;
+    border-radius: 100px;
+}
+
+.detail-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 24px 0;
+}
+
+/* ---- Detail Description ---- */
+.detail-desc-section h3,
+.detail-specs-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-bottom: 12px;
+}
+
+.detail-desc-section p {
+    font-size: 0.938rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+}
+
+/* ---- Specs Table ---- */
+.detail-specs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detail-specs-table tr {
+    border-bottom: 1px solid var(--color-border);
+}
+
+.detail-specs-table tr:last-child {
+    border-bottom: none;
+}
+
+.detail-specs-table td {
+    padding: 10px 0;
+    font-size: 0.875rem;
+}
+
+.detail-specs-table td:first-child {
+    color: var(--color-text-light);
+    width: 120px;
+    font-weight: 500;
+}
+
+.detail-specs-table td:last-child {
+    color: var(--color-text);
+}
+
+/* ---- Detail CTA Row ---- */
+.detail-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.btn-detail-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #009C3B, #007A2E);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0,156,59,0.3);
+}
+
+.btn-detail-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,156,59,0.4);
+}
+
+.btn-detail-back {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 24px;
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    font-size: 0.938rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid var(--color-border);
+}
+
+.btn-detail-back:hover {
+    background: var(--color-border);
+    color: var(--color-text);
+}
+
+/* ---- Features Section ---- */
+.detail-features-section {
+    margin-top: 64px;
+}
+
+.detail-features-section h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 20px;
+}
+
+.detail-features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.detail-feature-item {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.detail-feature-item:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0,156,59,0.08);
+}
+
+.detail-feature-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 7px;
+}
+
+.detail-feature-text {
+    font-size: 0.938rem;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/* ---- Related Products ---- */
+.detail-related-section {
+    margin-top: 64px;
+}
+
+.detail-related-section h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 20px;
+}
+
+.detail-related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+/* ---- Product Not Found ---- */
+.detail-not-found {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.detail-not-found svg {
+    margin-bottom: 20px;
+    color: var(--color-text-light);
+}
+
+.detail-not-found h2 {
+    font-size: 1.5rem;
+    color: var(--color-dark);
+    margin-bottom: 8px;
+}
+
+.detail-not-found p {
+    color: var(--color-text-muted);
+    margin-bottom: 24px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+    .detail-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .detail-image-section {
+        position: static;
+    }
+
+    .detail-image {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    .detail-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .detail-related-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-main {
+        padding: 24px 0 60px;
+    }
+
+    .breadcrumb-bar {
+        margin-top: 60px;
+    }
+
+    .detail-layout {
+        gap: 24px;
+    }
+
+    .detail-name {
+        font-size: 1.35rem;
+    }
+
+    .detail-price-num {
+        font-size: 1.75rem;
+    }
+
+    .detail-cta-row {
+        flex-direction: column;
+    }
+
+    .btn-detail-primary,
+    .btn-detail-back {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .detail-features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-related-grid {
+        grid-template-columns: 1fr;
+    }
+}
