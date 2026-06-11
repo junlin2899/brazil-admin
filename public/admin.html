@@ -730,23 +730,18 @@ const API = '/api';
 // API Helpers
 // ============================
 async function api(url, options = {}) {
-    // 15s timeout for Railway cold-start
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const fullUrl = API + url;
     try {
-        const res = await fetch(API + url, { ...options, signal: controller.signal });
-        clearTimeout(timeoutId);
+        console.log('[API] Requesting:', fullUrl);
+        const res = await fetch(fullUrl, options);
+        console.log('[API] Response status:', res.status, fullUrl);
         const data = await res.json();
         if (!data.success && !res.ok) {
             throw new Error(data.message || '请求失败');
         }
         return data;
     } catch (err) {
-        clearTimeout(timeoutId);
-        if (err.name === 'AbortError') {
-            throw new Error('请求超时，服务器可能正在唤醒中');
-        }
-        showToast(err.message, 'error');
+        console.error('[API] Error:', err.name, err.message, 'URL:', fullUrl);
         throw err;
     }
 }
@@ -786,29 +781,47 @@ async function apiPut(url, formData) {
 // ============================
 async function init() {
     document.getElementById('mainContent').innerHTML =
-        '<div class="loading"><div class="spinner"></div><p>正在连接服务器...</p><p style="font-size:12px;color:var(--text-secondary);margin-top:8px;">免费版服务器休眠后首次加载可能需要 30-60 秒自动唤醒</p></div>';
-    await loadData(12, 0);
+        '<div class="loading"><div class="spinner"></div><p>正在加载数据...</p></div>';
+    await loadData();
 }
 
-async function loadData(retriesLeft, elapsedSec) {
+async function loadData() {
+    let errors = [];
+
+    // Try products first (serial instead of Promise.all for better error isolation)
     try {
-        const [configRes, productsRes] = await Promise.all([
-            api('/config'),
-            api('/products')
-        ]);
-        config = configRes.data || {};
+        const productsRes = await api('/products');
         products = productsRes.data || [];
-        renderProductsPage();
     } catch (e) {
-        const nextElapsed = elapsedSec + 5;
-        if (retriesLeft > 0) {
-            document.getElementById('mainContent').innerHTML =
-                '<div class="loading"><div class="spinner"></div><p>服务器休眠中，正在自动唤醒... 已等待 ' + nextElapsed + ' 秒</p><p style="font-size:12px;color:var(--text-secondary);margin-top:8px;">如长时间未响应，也可点击下方按钮立即重试</p><button class="btn btn-primary" style="margin-top:12px;" onclick="init()">立即重试</button></div>';
-            await new Promise(r => setTimeout(r, 5000));
-            return loadData(retriesLeft - 1, nextElapsed);
-        }
+        errors.push('商品列表: ' + (e.message || e.name || '未知错误'));
+    }
+
+    // Then config
+    try {
+        const configRes = await api('/config');
+        config = configRes.data || {};
+    } catch (e) {
+        errors.push('配置: ' + (e.message || e.name || '未知错误'));
+    }
+
+    if (errors.length === 0) {
+        renderProductsPage();
+    } else {
         document.getElementById('mainContent').innerHTML =
-            '<div class="empty-state"><svg viewBox="0 0 48 48" fill="none" width="48" height="48"><rect x="4" y="4" width="40" height="40" rx="8" stroke="#ccc" stroke-width="2"/><path d="M16 16l16 16M32 16L16 32" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/></svg><p style="margin-bottom:8px;font-weight:500;">服务器连接失败</p><p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">免费版服务可能处于休眠状态，请点击下方按钮再次尝试唤醒。<br>若多次失败，请稍后重试或联系管理员。</p><button class="btn btn-primary" onclick="init()">重新连接</button></div>';
+            '<div class="empty-state">' +
+            '<svg viewBox="0 0 48 48" fill="none" width="48" height="48"><rect x="4" y="4" width="40" height="40" rx="8" stroke="#ccc" stroke-width="2"/><path d="M16 16l16 16M32 16L16 32" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/></svg>' +
+            '<p style="margin-bottom:8px;font-weight:500;">数据加载失败</p>' +
+            '<p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">错误详情：</p>' +
+            '<ul style="text-align:left;font-size:12px;color:#dc2626;margin-bottom:16px;max-width:400px;line-height:1.8;">' +
+            errors.map(e => '<li>' + escHtml(e) + '</li>').join('') +
+            '</ul>' +
+            '<p style="font-size:12px;color:var(--text-secondary);margin-bottom:12px;">' +
+            '浏览器: ' + navigator.userAgent.split(' ')[0] + ' | ' +
+            '当前域名: ' + window.location.host + ' | ' +
+            '协议: ' + window.location.protocol +
+            '</p>' +
+            '<button class="btn btn-primary" onclick="init()">重新加载</button>' +
+            '</div>';
     }
 }
 
